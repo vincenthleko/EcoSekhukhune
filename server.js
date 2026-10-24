@@ -1,85 +1,108 @@
 
 const express = require("express");
 const path = require("path");
-const Database = require("better-sqlite3");
+const { Pool } = require("pg");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Connect to the SQLite database
-const db = new Database(
-  path.join(__dirname, "database", "ecosekhukhune.db")
-);
+if (!process.env.DATABASE_URL) {
+  console.error("Missing DATABASE_URL environment variable.");
+  process.exit(1);
+}
 
-db.pragma("journal_mode = WAL");
+// Connect to the Render PostgreSQL database.
+const db = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
+
+db.on("error", (error) => {
+  console.error("Unexpected PostgreSQL connection error:", error.message);
+});
 
 // Middleware
-app.use(express.json());
+app.use(express.json({ limit: "20kb" }));
 app.use(express.static(path.join(__dirname, "public")));
 
-// Create database tables
-db.exec(`
-  CREATE TABLE IF NOT EXISTS centres (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    name TEXT NOT NULL,
-    municipality TEXT NOT NULL,
-    address TEXT NOT NULL,
-    materials TEXT NOT NULL,
-    status TEXT NOT NULL DEFAULT 'pending',
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-  );
+const validMunicipalities = [
+  "Fetakgomo Tubatse",
+  "Makhuduthamaga",
+  "Elias Motsoaledi",
+  "Ephraim Mogale"
+];
 
-  CREATE TABLE IF NOT EXISTS activities (
-    id INTEGER PRIMARY KEY AUTOINCREMENT,
-    activity_type TEXT NOT NULL,
-    material TEXT NOT NULL,
-    quantity_kg REAL NOT NULL,
-    municipality TEXT NOT NULL,
-    created_at TEXT DEFAULT CURRENT_TIMESTAMP
-  );
-`);
+const allowedMaterials = [
+  "Plastic",
+  "Paper",
+  "Glass",
+  "Metal",
+  "Organic Waste",
+  "Electronic Waste"
+];
+
+// Create tables in PostgreSQL.
+async function initializeDatabase() {
+  await db.query(`
+    CREATE TABLE IF NOT EXISTS centres (
+      id BIGSERIAL PRIMARY KEY,
+      name TEXT NOT NULL,
+      municipality TEXT NOT NULL,
+      address TEXT NOT NULL,
+      materials JSONB NOT NULL,
+      status TEXT NOT NULL DEFAULT 'pending',
+      created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+
+    CREATE TABLE IF NOT EXISTS activities (
+      id BIGSERIAL PRIMARY KEY,
+      activity_type TEXT NOT NULL,
+      material TEXT NOT NULL,
+      quantity_kg DOUBLE PRECISION NOT NULL,
+      municipality TEXT NOT NULL,
+      created_at TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+    );
+  `);
+}
 
 // API health check
-app.get("/api/health", (req, res) => {
-  res.json({
-    status: "success",
-    message: "EcoSekhukhune backend is running!"
-  });
+app.get("/api/health", async (req, res) => {
+  try {
+    await db.query("SELECT 1");
+
+    res.json({
+      status: "success",
+      message: "EcoSekhukhune backend and database are running!"
+    });
+  } catch (error) {
+    console.error("Health check failed:", error.message);
+    res.status(503).json({
+      status: "error",
+      message: "Database is currently unavailable."
+    });
+  }
 });
 
-// Get recycling centres
-app.get("/api/centres", (req, res) => {
-  const centres = db.prepare(`
-    SELECT id, name, municipality, address, materials, status
-    FROM centres
-    WHERE status = 'verified'
-    ORDER BY name
-  `).all();
+// Get verified recycling centres
+app.get("/api/centres", async (req, res) => {
+  try {
+    const result = await db.query(`
+      SELECT id, name, municipality, address, materials, status
+      FROM centres
+      WHERE status = 'verified'
+      ORDER BY name
+    `);
 
-  res.json(centres.map(centre => ({
-    ...centre,
-    materials: JSON.parse(centre.materials)
-  })));
+    res.json(result.rows);
+  } catch (error) {
+    console.error("Could not fetch centres:", error.message);
+    res.status(500).json({ error: "Could not load recycling centres." });
+  }
 });
 
-app.post("/api/centres", (req, res) => {
+// Suggest a recycling centre
+app.post("/api/centres", async (req, res) => {
   const { name, municipality, address, materials } = req.body || {};
-
-  const validMunicipalities = [
-    "Fetakgomo Tubatse",
-    "Makhuduthamaga",
-    "Elias Motsoaledi",
-    "Ephraim Mogale"
-  ];
-
-  const allowedMaterials = [
-    "Plastic",
-    "Paper",
-    "Glass",
-    "Metal",
-    "Organic Waste",
-    "Electronic Waste"
-  ];
 
   if (
     typeof name !== "string" ||
@@ -99,89 +122,110 @@ app.post("/api/centres", (req, res) => {
     });
   }
 
-  const result = db.prepare(`
-    INSERT INTO centres
-      (name, municipality, address, materials, status)
-    VALUES (?, ?, ?, ?, 'pending')
-  `).run(
-    name.trim(),
-    municipality,
-    address.trim(),
-    JSON.stringify([...new Set(materials)])
-  );
+  try {
+    const result = await db.query(
+      `INSERT INTO centres
+        (name, municipality, address, materials, status)
+       VALUES ($1, $2, $3, $4, 'pending')
+       RETURNING id`,
+      [
+        name.trim(),
+        municipality,
+        address.trim(),
+        JSON.stringify([...new Set(materials)])
+      ]
+    );
 
-  res.status(201).json({
-    message: "Centre suggestion submitted for review.",
-    id: result.lastInsertRowid
-  });
+    res.status(201).json({
+      message: "Centre suggestion submitted for review.",
+      id: result.rows[0].id
+    });
+  } catch (error) {
+    console.error("Could not save centre suggestion:", error.message);
+    res.status(500).json({
+      error: "Could not save the centre suggestion. Please try again."
+    });
+  }
 });
 
-
 // Submit a recycling activity
-app.post("/api/activities", (req, res) => {
+app.post("/api/activities", async (req, res) => {
   const { activityType, material, quantityKg, municipality } =
     req.body || {};
 
-  const types = ["recycled", "collected"];
-  const materials = [
-    "Plastic", "Paper", "Glass", "Metal",
-    "Organic Waste", "Electronic Waste"
-  ];
-  const municipalities = [
-    "Fetakgomo Tubatse",
-    "Makhuduthamaga",
-    "Elias Motsoaledi",
-    "Ephraim Mogale"
-  ];
+  const validTypes = ["recycled", "collected"];
 
   if (
-    !types.includes(activityType) ||
-    !materials.includes(material) ||
+    !validTypes.includes(activityType) ||
+    !allowedMaterials.includes(material) ||
     typeof quantityKg !== "number" ||
     !Number.isFinite(quantityKg) ||
     quantityKg <= 0 ||
     quantityKg > 100000 ||
-    !municipalities.includes(municipality)
+    !validMunicipalities.includes(municipality)
   ) {
     return res.status(400).json({
       error: "Please provide valid recycling activity details."
     });
   }
 
-  const result = db.prepare(`
-    INSERT INTO activities
-      (activity_type, material, quantity_kg, municipality)
-    VALUES (?, ?, ?, ?)
-  `).run(activityType, material, quantityKg, municipality);
+  try {
+    const result = await db.query(
+      `INSERT INTO activities
+        (activity_type, material, quantity_kg, municipality)
+       VALUES ($1, $2, $3, $4)
+       RETURNING id`,
+      [activityType, material, quantityKg, municipality]
+    );
 
-  res.status(201).json({
-    message: "Recycling activity saved successfully!",
-    id: result.lastInsertRowid
+    res.status(201).json({
+      message: "Recycling activity saved successfully!",
+      id: result.rows[0].id
+    });
+  } catch (error) {
+    console.error("Could not save activity:", error.message);
+    res.status(500).json({
+      error: "Could not save the recycling activity. Please try again."
+    });
+  }
+});
+
+// Get impact statistics
+app.get("/api/stats", async (req, res) => {
+  try {
+    const activities = await db.query(`
+      SELECT COUNT(*) AS total_activities,
+             COALESCE(SUM(quantity_kg), 0) AS total_kilograms
+      FROM activities
+    `);
+
+    const centres = await db.query(`
+      SELECT COUNT(*) AS total
+      FROM centres
+      WHERE status = 'verified'
+    `);
+
+    res.json({
+      recordedActivities: Number(activities.rows[0].total_activities),
+      recordedKilograms: Number(activities.rows[0].total_kilograms),
+      verifiedCentres: Number(centres.rows[0].total)
+    });
+  } catch (error) {
+    console.error("Could not fetch statistics:", error.message);
+    res.status(500).json({
+      error: "Could not load impact statistics."
+    });
+  }
+});
+
+// Start only after the database tables are ready.
+initializeDatabase()
+  .then(() => {
+    app.listen(PORT, "0.0.0.0", () => {
+      console.log(`EcoSekhukhune running on port ${PORT}`);
+    });
+  })
+  .catch((error) => {
+    console.error("Database initialization failed:", error.message);
+    process.exit(1);
   });
-});
-
-// Get real impact statistics from the database
-app.get("/api/stats", (req, res) => {
-  const activities = db.prepare(`
-    SELECT COUNT(*) AS totalActivities,
-           COALESCE(SUM(quantity_kg), 0) AS totalKilograms
-    FROM activities
-  `).get();
-
-  const centres = db.prepare(`
-    SELECT COUNT(*) AS total
-    FROM centres
-    WHERE status = 'verified'
-  `).get();
-
-  res.json({
-    recordedActivities: activities.totalActivities,
-    recordedKilograms: activities.totalKilograms,
-    verifiedCentres: centres.total
-  });
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`EcoSekhukhune running at http://localhost:${PORT}`);
-});
