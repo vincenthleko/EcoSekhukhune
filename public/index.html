@@ -5,284 +5,671 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="description" content="EcoSekhukhune connects communities with recycling education, local opportunities and environmental impact tracking.">
+
   <title>EcoSekhukhune | Recycle. Empower. Restore.</title>
+
+  <!-- Bootstrap 5 CSS -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+
+  <!-- Your existing stylesheet -->
   <link rel="stylesheet" href="style.css">
+
+  <!-- Your existing JavaScript -->
   <script src="app.js" defer></script>
 </head>
-<body>
-  <header class="site-header">
-    <a href="#" class="brand">
-      <span class="brand-icon">♻</span>
-      <span>Eco<span class="brand-accent">Sekhukhune</span></span>
-    </a>
 
-    <nav aria-label="Main navigation">
-      <a href="#home">Home</a>
-      <a href="#centres">Recycling centres</a>
-      <a href="#record">Record activity</a>
-      <a href="#learn">Learn</a>
+<body class="bg-light">
+
+  <!-- Navigation -->
+  <header>
+    <nav class="navbar navbar-expand-lg bg-white sticky-top border-bottom shadow-sm">
+      <div class="container py-2">
+
+        <a href="#home" class="navbar-brand fw-bold fs-4">
+          <span class="text-success">♻ Eco</span>Sekhukhune
+        </a>
+
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#ecoNavbar"
+          aria-controls="ecoNavbar"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="ecoNavbar">
+          <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+            <li class="nav-item">
+              <a class="nav-link" href="#home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#centres">Recycling Centres</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#record">Record Activity</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#learn">Learn</a>
+            </li>
+            <li class="nav-item ms-lg-2">
+              <a class="btn btn-success rounded-pill px-4" href="#record">
+                Recycle with us
+              </a>
+            </li>
+          </ul>
+        </div>
+
+      </div>
     </nav>
   </header>
 
   <main>
-    <section class="hero" id="home">
-      <div class="hero-content">
-        <span class="eyebrow">A cleaner Sekhukhune starts with us</span>
-        <h1>Turn waste into <span>opportunity.</span></h1>
-        <p>
-          Discover recycling, learn how to manage waste responsibly,
-          and help build a cleaner, more sustainable community.
+
+    <!-- Hero -->
+    <section id="home" class="py-5 bg-white">
+      <div class="container py-lg-5">
+        <div class="row align-items-center g-5">
+
+          <div class="col-lg-7">
+            <span class="badge rounded-pill text-bg-success mb-3 px-3 py-2">
+              A cleaner Sekhukhune starts with us
+            </span>
+
+            <h1 class="display-3 fw-bold lh-sm mb-4">
+              Turn waste into
+              <span class="text-success">opportunity.</span>
+            </h1>
+
+            <p class="lead text-secondary mb-4">
+              Discover recycling, learn how to manage waste responsibly,
+              and help build a cleaner, more sustainable community.
+            </p>
+
+            <div class="d-flex flex-wrap gap-3 mb-4">
+              <a class="btn btn-success btn-lg rounded-pill px-4" href="#record">
+                Record recycling
+              </a>
+              <a class="btn btn-outline-success btn-lg rounded-pill px-4" href="#centres">
+                Explore centres
+              </a>
+            </div>
+
+            <p class="small text-secondary mb-0">
+              Plastic · Paper · Glass · Metal · Organic waste · E-waste
+            </p>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="card border-0 shadow-sm rounded-4 text-center p-5 h-100">
+              <div class="display-1 mb-3" aria-hidden="true">♻️</div>
+              <h2 class="h3 fw-bold text-success">Small actions.</h2>
+              <h3 class="h4 text-secondary">Lasting impact.</h3>
+              <p class="text-secondary mb-0 mt-3">
+                Every responsible recycling action helps create a cleaner,
+                more sustainable community.
+              </p>
+              <div class="mt-4">
+                <span class="badge text-bg-light text-success p-2">Reduce</span>
+                <span class="badge text-bg-light text-success p-2">Reuse</span>
+                <span class="badge text-bg-light text-success p-2">Recycle</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Impact dashboard -->
+    <section class="py-5 bg-body-tertiary" aria-labelledby="impact-heading">
+      <div class="container">
+
+        <div class="text-center mb-5">
+          <span class="text-success fw-semibold text-uppercase small">
+            Our collective progress
+          </span>
+          <h2 id="impact-heading" class="display-6 fw-bold mt-2">
+            The impact we can measure
+          </h2>
+          <p class="text-secondary">
+            These figures come from activities recorded in the app.
+          </p>
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-md-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+              <div class="fs-1" aria-hidden="true">♻️</div>
+              <p class="display-5 fw-bold text-success mb-1" id="stat-activities">—</p>
+              <p class="text-secondary mb-0">Recorded activities</p>
+            </article>
+          </div>
+
+          <div class="col-md-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+              <div class="fs-1" aria-hidden="true">⚖️</div>
+              <p class="display-5 fw-bold text-success mb-1" id="stat-kilograms">—</p>
+              <p class="text-secondary mb-0">Kilograms recorded</p>
+            </article>
+          </div>
+
+          <div class="col-md-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 text-center p-4">
+              <div class="fs-1" aria-hidden="true">📍</div>
+              <p class="display-5 fw-bold text-success mb-1" id="stat-centres">—</p>
+              <p class="text-secondary mb-0">Verified recycling centres</p>
+            </article>
+          </div>
+
+        </div>
+
+        <p class="text-center text-secondary small mt-4"
+           id="stats-message" role="status" aria-live="polite">
+          Loading impact statistics…
         </p>
-        <div class="hero-actions">
-          <a class="button button-primary" href="#record">Record recycling</a>
-          <a class="button button-secondary" href="#centres">Explore centres</a>
+
+      </div>
+    </section>
+
+    <!-- Recycling centres -->
+    <section class="py-5 bg-white" id="centres">
+      <div class="container">
+
+        <div class="mb-4">
+          <span class="text-success fw-semibold text-uppercase small">
+            Find a place to recycle
+          </span>
+          <h2 class="display-6 fw-bold mt-2">Recycling centres</h2>
+          <p class="text-secondary">
+            Search verified centres currently listed on the platform.
+          </p>
         </div>
-        <p class="hero-note">Plastic · Paper · Glass · Metal · Organic waste · E-waste</p>
-      </div>
-      <div class="hero-art" aria-hidden="true">
-        <div class="eco-circle">♻</div>
-        <span class="floating-leaf leaf-one">🌱</span>
-        <span class="floating-leaf leaf-two">🍃</span>
-        <span class="hero-caption">Small actions.<br>Lasting impact.</span>
-      </div>
-    </section>
 
-    <section class="impact-section" aria-labelledby="impact-heading">
-      <div class="section-heading">
-        <span class="eyebrow">Our collective progress</span>
-        <h2 id="impact-heading">The impact we can measure</h2>
-        <p>These figures come from activities recorded in the app.</p>
-      </div>
+        <!-- Suggest a centre -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+          <div class="card-body p-4 p-lg-5">
 
-      <div class="stats-grid">
-        <article class="stat-card">
-          <span class="stat-icon">♻</span>
-          <p class="stat-value" id="stat-activities">—</p>
-          <p class="stat-label">Recorded activities</p>
-        </article>
-        <article class="stat-card">
-          <span class="stat-icon">⚖</span>
-          <p class="stat-value" id="stat-kilograms">—</p>
-          <p class="stat-label">Kilograms recorded</p>
-        </article>
-        <article class="stat-card">
-          <span class="stat-icon">📍</span>
-          <p class="stat-value" id="stat-centres">—</p>
-          <p class="stat-label">Verified recycling centres</p>
-        </article>
-      </div>
-      <p class="data-note" id="stats-message" role="status">
-        Loading impact statistics…
-      </p>
-    </section>
+            <h3 class="h4 fw-bold">Know a recycling centre?</h3>
+            <p class="text-secondary">
+              Help grow our directory by suggesting a local facility.
+              Suggestions may need verification before appearing in the directory.
+            </p>
 
-    <section class="content-section" id="centres">
-      <div class="section-heading section-heading-row">
-        <div>
-          <span class="eyebrow">Find a place to recycle</span>
-          <h2>Recycling centres</h2>
-          <p>Search the verified centres currently listed on the platform.</p>
+            <form id="centre-form" class="row g-3">
+
+              <div class="col-md-6">
+                <label for="centre-name" class="form-label fw-semibold">
+                  Centre name
+                </label>
+                <input
+                  id="centre-name"
+                  name="name"
+                  type="text"
+                  class="form-control"
+                  maxlength="100"
+                  placeholder="Enter centre name"
+                  required
+                >
+              </div>
+
+              <div class="col-md-6">
+                <label for="centre-municipality" class="form-label fw-semibold">
+                  Municipality
+                </label>
+                <select
+                  id="centre-municipality"
+                  name="municipality"
+                  class="form-select"
+                  required
+                >
+                  <option value="">Select municipality</option>
+                  <option>Fetakgomo Tubatse</option>
+                  <option>Makhuduthamaga</option>
+                  <option>Elias Motsoaledi</option>
+                  <option>Ephraim Mogale</option>
+                </select>
+              </div>
+
+              <div class="col-12">
+                <label for="centre-address" class="form-label fw-semibold">
+                  Address or location
+                </label>
+                <input
+                  id="centre-address"
+                  name="address"
+                  type="text"
+                  class="form-control"
+                  maxlength="200"
+                  placeholder="Village, town or street address"
+                  required
+                >
+              </div>
+
+              <div class="col-12">
+                <fieldset>
+                  <legend class="fs-6 fw-semibold">Materials accepted</legend>
+
+                  <div class="d-flex flex-wrap gap-3">
+                    <label class="form-check">
+                      <input class="form-check-input" type="checkbox"
+                             name="materials" value="Plastic">
+                      <span class="form-check-label">Plastic</span>
+                    </label>
+
+                    <label class="form-check">
+                      <input class="form-check-input" type="checkbox"
+                             name="materials" value="Paper">
+                      <span class="form-check-label">Paper</span>
+                    </label>
+
+                    <label class="form-check">
+                      <input class="form-check-input" type="checkbox"
+                             name="materials" value="Glass">
+                      <span class="form-check-label">Glass</span>
+                    </label>
+
+                    <label class="form-check">
+                      <input class="form-check-input" type="checkbox"
+                             name="materials" value="Metal">
+                      <span class="form-check-label">Metal</span>
+                    </label>
+
+                    <label class="form-check">
+                      <input class="form-check-input" type="checkbox"
+                             name="materials" value="Organic Waste">
+                      <span class="form-check-label">Organic waste</span>
+                    </label>
+
+                    <label class="form-check">
+                      <input class="form-check-input" type="checkbox"
+                             name="materials" value="Electronic Waste">
+                      <span class="form-check-label">E-waste</span>
+                    </label>
+                  </div>
+                </fieldset>
+              </div>
+
+              <div class="col-12">
+                <button class="btn btn-success rounded-pill px-4" type="submit">
+                  Submit centre suggestion
+                </button>
+              </div>
+
+              <div class="col-12">
+                <p id="centre-form-message" class="mb-0" role="status"
+                   aria-live="polite"></p>
+              </div>
+
+            </form>
+          </div>
         </div>
-        
-<div class="suggest-centre-panel">
-  <h3>Know a recycling centre?</h3>
-  <p>Help grow our directory by suggesting a local facility.</p>
 
-  <form id="centre-form" class="centre-form">
-    <label>
-      Centre name
-      <input name="name" type="text" maxlength="100"
-        placeholder="Enter centre name" required>
-    </label>
+        <!-- Search and filter -->
+        <div class="card border-0 shadow-sm rounded-4 mb-4">
+          <div class="card-body p-4">
+            <div class="row g-3 align-items-end">
 
-    <label>
-      Municipality
-      <select name="municipality" required>
-        <option value="">Select municipality</option>
-        <option>Fetakgomo Tubatse</option>
-        <option>Makhuduthamaga</option>
-        <option>Elias Motsoaledi</option>
-        <option>Ephraim Mogale</option>
-      </select>
-    </label>
+              <div class="col-lg-5">
+                <label for="centre-search" class="form-label fw-semibold">
+                  Search by name, area or address
+                </label>
+                <input
+                  id="centre-search"
+                  type="search"
+                  class="form-control"
+                  maxlength="100"
+                  placeholder="e.g. Jane Furse"
+                >
+              </div>
 
-    <label class="full-width">
-      Address or location
-      <input name="address" type="text" maxlength="200"
-        placeholder="Village, town or street address" required>
-    </label>
+              <div class="col-lg-4">
+                <label for="material-filter" class="form-label fw-semibold">
+                  Material
+                </label>
+                <select id="material-filter" class="form-select">
+                  <option value="">All materials</option>
+                  <option>Plastic</option>
+                  <option>Paper</option>
+                  <option>Glass</option>
+                  <option>Metal</option>
+                  <option>Organic Waste</option>
+                  <option>Electronic Waste</option>
+                </select>
+              </div>
 
-    <fieldset class="full-width material-options">
-      <legend>Materials accepted</legend>
-      <label><input type="checkbox" name="materials" value="Plastic"> Plastic</label>
-      <label><input type="checkbox" name="materials" value="Paper"> Paper</label>
-      <label><input type="checkbox" name="materials" value="Glass"> Glass</label>
-      <label><input type="checkbox" name="materials" value="Metal"> Metal</label>
-      <label><input type="checkbox" name="materials" value="Organic Waste"> Organic waste</label>
-      <label><input type="checkbox" name="materials" value="Electronic Waste"> E-waste</label>
-    </fieldset>
+              <div class="col-lg-3">
+                <button
+                  class="btn btn-success w-100 rounded-pill"
+                  id="search-centres"
+                  type="button"
+                >
+                  Search centres
+                </button>
+              </div>
 
-    <button class="button button-primary full-width" type="submit">
-      Submit centre suggestion
-    </button>
+            </div>
+          </div>
+        </div>
 
-    <p id="centre-form-message" class="form-message full-width" role="status"></p>
-  </form>
-</div>
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2 mb-3">
+          <h3 class="h5 fw-bold mb-0">Available centres</h3>
+          <span class="badge rounded-pill text-bg-success">
+            ✓ Verified listings only
+          </span>
+        </div>
 
-        <div id="centres-list" class="centres-grid" aria-live="polite"></div>
-        <span class="verified-label">✓ Verified listings only</span>
+        <!-- Keep this ID unique: app.js uses it to render centres -->
+        <div id="centres-list" class="row g-4" aria-live="polite">
+          <div class="col-12">
+            <p class="text-secondary">Loading recycling centres…</p>
+          </div>
+        </div>
+
+        <p class="text-secondary small mt-3" id="centres-message"
+           role="status" aria-live="polite"></p>
+
       </div>
-
-      <div class="search-panel">
-        <label class="search-field">
-          <span>Search by name, area or address</span>
-          <input id="centre-search" type="search"
-            placeholder="e.g. Jane Furse" maxlength="100">
-        </label>
-
-        <label class="search-field">
-          <span>Material</span>
-          <select id="material-filter">
-            <option value="">All materials</option>
-            <option>Plastic</option>
-            <option>Paper</option>
-            <option>Glass</option>
-            <option>Metal</option>
-            <option>Organic Waste</option>
-            <option>Electronic Waste</option>
-          </select>
-        </label>
-
-        <button class="button button-primary" id="search-centres" type="button">
-          Search
-        </button>
-      </div>
-
-      <div id="centres-list" class="centres-grid" aria-live="polite">
-        <p class="empty-state">Loading recycling centres…</p>
-      </div>
-      <p class="data-note" id="centres-message" role="status"></p>
     </section>
 
-    <section class="record-section" id="record">
-      <div class="record-intro">
-        <span class="eyebrow">Make your contribution count</span>
-        <h2>Record a recycling activity</h2>
-        <p>
-          Record the material you collected or recycled. Your submission
-          will be saved to the EcoSekhukhune database and included in the
-          platform's impact statistics.
+    <!-- Record recycling activity -->
+    <section class="py-5 bg-body-tertiary" id="record">
+      <div class="container">
+        <div class="row g-5 align-items-start">
+
+          <div class="col-lg-5">
+            <span class="text-success fw-semibold text-uppercase small">
+              Make your contribution count
+            </span>
+            <h2 class="display-6 fw-bold mt-2">
+              Record a recycling activity
+            </h2>
+
+            <p class="text-secondary">
+              Record the material you collected or recycled. Your submission
+              will be saved to the EcoSekhukhune database and included in the
+              platform's impact statistics.
+            </p>
+
+            <div class="alert alert-success border-0 rounded-4 mt-4">
+              <div class="d-flex gap-3">
+                <span class="fs-3" aria-hidden="true">🌍</span>
+                <div>
+                  <h3 class="h6 fw-bold">Make every kilogram count</h3>
+                  <p class="mb-0 small">
+                    Use an accurate weight in kilograms. Only record real activities.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-7">
+            <div class="card border-0 shadow-sm rounded-4">
+              <div class="card-body p-4 p-lg-5">
+
+                <form id="activity-form" class="row g-3">
+
+                  <div class="col-md-6">
+                    <label for="activity-type" class="form-label fw-semibold">
+                      Activity
+                    </label>
+                    <select
+                      id="activity-type"
+                      name="activityType"
+                      class="form-select"
+                      required
+                    >
+                      <option value="">Select an activity</option>
+                      <option value="collected">Waste collected</option>
+                      <option value="recycled">Material recycled</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="activity-material" class="form-label fw-semibold">
+                      Material type
+                    </label>
+                    <select
+                      id="activity-material"
+                      name="material"
+                      class="form-select"
+                      required
+                    >
+                      <option value="">Select a material</option>
+                      <option>Plastic</option>
+                      <option>Paper</option>
+                      <option>Glass</option>
+                      <option>Metal</option>
+                      <option>Organic Waste</option>
+                      <option>Electronic Waste</option>
+                    </select>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="quantity-kg" class="form-label fw-semibold">
+                      Quantity (kg)
+                    </label>
+                    <input
+                      id="quantity-kg"
+                      name="quantityKg"
+                      type="number"
+                      class="form-control"
+                      min="0.01"
+                      max="100000"
+                      step="0.01"
+                      placeholder="e.g. 5.5"
+                      required
+                    >
+                    <div class="form-text">
+                      Enter a value between 0.01 and 100,000 kg.
+                    </div>
+                  </div>
+
+                  <div class="col-md-6">
+                    <label for="activity-municipality" class="form-label fw-semibold">
+                      Local municipality
+                    </label>
+                    <select
+                      id="activity-municipality"
+                      name="municipality"
+                      class="form-select"
+                      required
+                    >
+                      <option value="">Select a municipality</option>
+                      <option>Fetakgomo Tubatse</option>
+                      <option>Makhuduthamaga</option>
+                      <option>Elias Motsoaledi</option>
+                      <option>Ephraim Mogale</option>
+                    </select>
+                  </div>
+
+                  <div class="col-12">
+                    <button
+                      class="btn btn-success btn-lg rounded-pill w-100"
+                      type="submit"
+                    >
+                      Save activity
+                    </button>
+                  </div>
+
+                  <div class="col-12">
+                    <p id="activity-message" class="mb-0" role="status"
+                       aria-live="polite"></p>
+                  </div>
+
+                </form>
+
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Recycling education -->
+    <section class="py-5 bg-white" id="learn">
+      <div class="container">
+
+        <div class="text-center mb-5">
+          <span class="text-success fw-semibold text-uppercase small">
+            Knowledge creates change
+          </span>
+          <h2 class="display-6 fw-bold mt-2">Know what goes where</h2>
+          <p class="text-secondary">
+            Start with these basic recycling guidelines.
+          </p>
+        </div>
+
+        <div class="row g-4">
+
+          <div class="col-md-6 col-lg-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 p-3">
+              <div class="card-body">
+                <div class="display-5 mb-3" aria-hidden="true">🥤</div>
+                <h3 class="h5 fw-bold">Plastic</h3>
+                <p class="text-secondary mb-0">
+                  Separate recyclable plastic containers and packaging.
+                  Empty and rinse them when practical, and check local collection rules.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 p-3">
+              <div class="card-body">
+                <div class="display-5 mb-3" aria-hidden="true">📦</div>
+                <h3 class="h5 fw-bold">Paper and cardboard</h3>
+                <p class="text-secondary mb-0">
+                  Keep recyclable paper dry and clean. Remove excessive food
+                  residue and separate materials according to local requirements.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 p-3">
+              <div class="card-body">
+                <div class="display-5 mb-3" aria-hidden="true">🍾</div>
+                <h3 class="h5 fw-bold">Glass and metal</h3>
+                <p class="text-secondary mb-0">
+                  Keep bottles, jars and metal cans separate where accepted.
+                  Handle broken glass carefully to prevent injuries.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 p-3">
+              <div class="card-body">
+                <div class="display-5 mb-3" aria-hidden="true">🍂</div>
+                <h3 class="h5 fw-bold">Organic waste</h3>
+                <p class="text-secondary mb-0">
+                  Fruit and vegetable scraps may be suitable for composting.
+                  Keep plastics and other non-compostable materials out.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 p-3">
+              <div class="card-body">
+                <div class="display-5 mb-3" aria-hidden="true">💻</div>
+                <h3 class="h5 fw-bold">Electronic waste</h3>
+                <p class="text-secondary mb-0">
+                  Keep old electronics, cables and accessories separate from
+                  ordinary rubbish. Use an appropriate e-waste collection service.
+                </p>
+              </div>
+            </article>
+          </div>
+
+          <div class="col-md-6 col-lg-4">
+            <article class="card border-0 shadow-sm rounded-4 h-100 p-3">
+              <div class="card-body">
+                <div class="display-5 mb-3" aria-hidden="true">🤝</div>
+                <h3 class="h5 fw-bold">Start locally</h3>
+                <p class="text-secondary mb-0">
+                  Organise a clean-up, encourage responsible disposal, and ask
+                  your municipality about local recycling services and requirements.
+                </p>
+              </div>
+            </article>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to action -->
+    <section class="py-5 bg-success text-white">
+      <div class="container text-center py-4">
+        <span class="small text-uppercase fw-semibold">
+          Our shared responsibility
+        </span>
+        <h2 class="display-6 fw-bold mt-3">
+          A cleaner community creates new possibilities.
+        </h2>
+        <p class="lead mx-auto my-4" style="max-width: 700px;">
+          Learn, take action, and help make recycling part of everyday life
+          across Sekhukhune.
         </p>
-        <div class="record-tip">
-          <span>🌍</span>
-          <p>Use an accurate weight in kilograms. Only record real activities.</p>
-        </div>
-      </div>
-
-      <form id="activity-form" class="activity-form">
-        <label>
-          Activity
-          <select name="activityType" required>
-            <option value="">Select an activity</option>
-            <option value="collected">Waste collected</option>
-            <option value="recycled">Material recycled</option>
-          </select>
-        </label>
-
-        <label>
-          Material type
-          <select name="material" required>
-            <option value="">Select a material</option>
-            <option>Plastic</option>
-            <option>Paper</option>
-            <option>Glass</option>
-            <option>Metal</option>
-            <option>Organic Waste</option>
-            <option>Electronic Waste</option>
-          </select>
-        </label>
-
-        <label>
-          Quantity (kg)
-          <input name="quantityKg" type="number" min="0.01"
-            max="100000" step="0.01" placeholder="e.g. 5.5" required>
-        </label>
-
-        <label>
-          Local municipality
-          <select name="municipality" required>
-            <option value="">Select a municipality</option>
-            <option>Fetakgomo Tubatse</option>
-            <option>Makhuduthamaga</option>
-            <option>Elias Motsoaledi</option>
-            <option>Ephraim Mogale</option>
-          </select>
-        </label>
-
-        <button class="button button-primary submit-button" type="submit">
-          Save activity
-        </button>
-        <p id="activity-message" class="form-message" role="status"></p>
-      </form>
-    </section>
-
-    <section class="content-section learning-section" id="learn">
-      <div class="section-heading">
-        <span class="eyebrow">Knowledge creates change</span>
-        <h2>Know what goes where</h2>
-        <p>Start with these basic recycling guidelines.</p>
-      </div>
-
-      <div class="learning-grid">
-        <article class="learning-card">
-          <span class="learning-icon">🥤</span>
-          <h3>Plastic</h3>
-          <p>Separate recyclable plastic containers and packaging. Empty and rinse them when practical, and check local collection rules.</p>
-        </article>
-        <article class="learning-card">
-          <span class="learning-icon">📦</span>
-          <h3>Paper and cardboard</h3>
-          <p>Keep recyclable paper dry and clean. Remove excessive food residue and separate materials according to local requirements.</p>
-        </article>
-        <article class="learning-card">
-          <span class="learning-icon">🍾</span>
-          <h3>Glass and metal</h3>
-          <p>Keep bottles, jars and metal cans separate where accepted. Handle broken glass carefully to prevent injuries.</p>
-        </article>
-        <article class="learning-card">
-          <span class="learning-icon">🍂</span>
-          <h3>Organic waste</h3>
-          <p>Fruit and vegetable scraps may be suitable for composting. Keep plastics and other non-compostable materials out.</p>
-        </article>
-        <article class="learning-card">
-          <span class="learning-icon">💻</span>
-          <h3>Electronic waste</h3>
-          <p>Keep old electronics, cables and accessories separate from ordinary rubbish. Use an appropriate e-waste collection service.</p>
-        </article>
-        <article class="learning-card">
-          <span class="learning-icon">🤝</span>
-          <h3>Start locally</h3>
-          <p>Organise a clean-up, encourage responsible disposal, and ask your municipality about local recycling services and requirements.</p>
-        </article>
+        <a class="btn btn-light btn-lg rounded-pill px-4 text-success fw-semibold"
+           href="#record">
+          Get involved
+        </a>
       </div>
     </section>
 
-    <section class="callout">
-      <span class="eyebrow">Our shared responsibility</span>
-      <h2>A cleaner community creates new possibilities.</h2>
-      <p>Learn, take action, and help make recycling part of everyday life across Sekhukhune.</p>
-      <a class="button button-light" href="#record">Get involved</a>
-    </section>
   </main>
 
-  <footer class="site-footer">
-    <a href="#home" class="brand footer-brand">
-      <span class="brand-icon">♻</span>
-      <span>Eco<span class="brand-accent">Sekhukhune</span></span>
-    </a>
-    <p>Building recycling awareness and opportunity across Sekhukhune District.</p>
-    <p class="footer-small">Community impact begins with responsible action.</p>
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4">
+    <div class="container text-center">
+
+      <a href="#home" class="text-white text-decoration-none fw-bold fs-4">
+        <span class="text-success">♻ Eco</span>Sekhukhune
+      </a>
+
+      <p class="text-white-50 mt-3 mb-2">
+        Building recycling awareness and opportunity across Sekhukhune District.
+      </p>
+
+      <p class="text-white-50 small mb-0">
+        Community impact begins with responsible action.
+      </p>
+
+      <div class="border-top border-secondary mt-4 pt-3">
+        <p class="small text-white-50 mb-0">
+          &copy; <span id="current-year">2026</span> EcoSekhukhune
+        </p>
+      </div>
+
+    </div>
   </footer>
+
+  <!-- Bootstrap JavaScript bundle -->
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+
+  <script>
+    document.getElementById("current-year").textContent =
+      new Date().getFullYear();
+  </script>
+
 </body>
 </html>
+```

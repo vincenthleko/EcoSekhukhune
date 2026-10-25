@@ -665,18 +665,23 @@ select {
   color: var(--muted);
 }
 
-.centre-form {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 18px;
+/* Smaller checkboxes in Materials accepted */
+#centre-form fieldset .form-check-input {
+  width: 12px;
+  height: 12px;
+  margin-top: 5px;
+  flex-shrink: 0;
 }
 
-.centre-form > label {
+#centre-form fieldset .form-check {
   display: flex;
-  flex-direction: column;
-  gap: 8px;
-  font-size: 0.9rem;
-  font-weight: 700;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 0;
+}
+
+#centre-form fieldset .form-check-label {
+  font-size: 14px;
 }
 
 .full-width {
