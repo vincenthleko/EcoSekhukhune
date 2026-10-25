@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 const { Pool } = require("pg");
 
-const app = express();npm start
+const app = express();
 const PORT = process.env.PORT || 3000;
 
 if (!process.env.DATABASE_URL) {
